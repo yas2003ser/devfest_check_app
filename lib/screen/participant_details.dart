@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:check/models/participant.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:intl/intl.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ParticipantDetails extends StatefulWidget {
@@ -19,7 +18,8 @@ class ParticipantDetails extends StatefulWidget {
 
   Future<String> checkIn() async {
     try {
-      final url = Uri.parse("https://devfestcheck.onrender.com/check/in");
+      final url =
+          Uri.parse("https://devfest-4873bc08093d.herokuapp.com/check/in");
       final Response res = await post(
         url,
         headers: {"Content-Type": "application/json"},
@@ -44,7 +44,8 @@ class ParticipantDetails extends StatefulWidget {
 
   Future<String> checkOut() async {
     try {
-      final url = Uri.parse("https://devfestcheck.onrender.com/check/out");
+      final url =
+          Uri.parse("https://devfest-4873bc08093d.herokuapp.com/check/out");
       final Response res = await post(
         url,
         headers: {"Content-Type": "application/json"},
@@ -71,8 +72,8 @@ class ParticipantDetails extends StatefulWidget {
 class _ParticipantDetailsState extends State<ParticipantDetails> {
   @override
   Widget build(BuildContext context) {
-    DateTime? date = DateTime.tryParse(widget.participant.birthDate);
-    String formattedBirthDate = DateFormat("yyyy-MM-dd").format(date!);
+    // DateTime? date = DateTime.tryParse(widget.participant.birthDate);
+    // String formattedBirthDate = DateFormat("yyyy-MM-dd").format(date!);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -106,7 +107,7 @@ class _ParticipantDetailsState extends State<ParticipantDetails> {
             const SizedBox(
               height: 10,
             ),
-            deatils("Birthday", formattedBirthDate),
+            deatils("Birthday", widget.participant.birthDate.toString()),
             const SizedBox(
               height: 10,
             ),

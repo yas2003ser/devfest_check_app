@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:check/models/participant.dart';
 import 'package:check/screen/participant_details.dart';
 import 'package:flutter/material.dart';
@@ -21,33 +22,44 @@ class _QRViewScreenState extends State<QRViewScreen> {
   bool _isLoading = false;
 
   void _loadData() async {
-    _isLoading = true;
-    setState(() {});
+    if (result == null || result!.code == null) {
+      // Handle the case where result or result.code is null
+      return;
+    }
 
     if (!mounted) return; // Check if the widget is still mounted
 
-    final url =
-        Uri.parse("https://devfestcheck.onrender.com/data/${result!.code}");
-    final Response res = await get(url);
+    setState(() {
+      _isLoading = true;
+    });
 
-    _isLoading = false;
-    setState(() {});
+    if (!mounted) return; // Check if the widget is still mounted
+
+    final url = Uri.parse(
+        "https://devfest-4873bc08093d.herokuapp.com/data/${result!.code!.trimLeft()}");
+    final Response res = await get(url);
 
     if (!mounted) return; // Check again before updating the state
 
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (!mounted) return; // Check if the widget is still mounted
+
     final Map<String, dynamic> data = jsonDecode(res.body);
-    Timer(const Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 2), () {
       if (mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (ctx) => ParticipantDetails(
               participant: Participant(
                 name:
-                    "${data["data"]["firstName"]}  ${data["data"]["lastName"]}",
+                    "${data["data"]["firstName"]} ${data["data"]["lastName"]}",
                 phoneNumber: data["data"]["phoneNumber"].toString(),
                 email: data["data"]["email"].toString(),
                 team: data["data"]["team"].toString(),
-                birthDate: data["data"]["dateOfBirth"],
+                birthDate: data["data"]["birthDate"].toString(),
                 state: data["data"]["state"].toString(),
               ),
               result: result,
