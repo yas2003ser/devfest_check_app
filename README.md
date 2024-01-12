@@ -7,7 +7,7 @@ A new Flutter project.
 This project is a starting point for a Flutter application.
 ## Demo
 
-![Apple iPhone 11 Pro Max Presentation (6)](https://user-images.githubusercontent.com/106885435/192829309-6ea34993-ffdb-4169-b814-52f39ef47bd6.png)
+![Apple iPhone 11 Pro Max Presentation (6)](https://github.com/yas2003ser/devfest_check_app/blob/main/screenshots/Screenshot%20from%202024-01-12%2014-33-59.png)
 
 A few resources to get you started if this is your first Flutter project:
 
